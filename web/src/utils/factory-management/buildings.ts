@@ -53,6 +53,15 @@ export const calculateProductBuildings = (factory: Factory, gameData: DataInterf
   })
 }
 
+export const calculateBuildingsAndPower = (factory: Factory) => {
+  const sinkName = 'resourcesink'
+  const sinkAmount = factory.buildingRequirements[sinkName]?.amount
+  const sinkPower = factory.buildingRequirements[sinkName]?.powerPerBuilding
+
+  factory.totalPower = 0
+  factory.buildingRequirements = {} as {[key: string]: BuildingRequirement }
+}
+
 export const calculatePowerProducerBuildings = (factory: Factory, gameData: DataInterface) => {
   // Loop through each power producer and add up the buildings
   factory.powerProducers.forEach(producer => {
@@ -80,6 +89,18 @@ export const calculatePowerProducerBuildings = (factory: Factory, gameData: Data
     facBuilding.amount = facBuilding.amount + Math.ceil(producer.buildingCount) // Total buildings regardless of clocks
     facBuilding.powerProduced = Number(powerProduced.toFixed(3)) // Fucky wuky floating point numbers
   })
+
+  // Special case for 'Sinks' that aren't used in a recipe/product. They are only added manually by the user
+  if (!sinkAmount || sinkAmount <= 0) return
+  factory.buildingRequirements[sinkName] = {
+    name: sinkName,
+    amount: sinkAmount,
+    powerPerBuilding: sinkPower,
+    totalPower: sinkPower * sinkAmount,
+  }
+
+  // Sum adding the Sink
+  factory.totalPower = factory.totalPower + (sinkPower * sinkAmount)
 }
 
 // Sums up all of the building data to create an aggregate value of power and building requirements

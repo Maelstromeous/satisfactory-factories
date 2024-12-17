@@ -13,6 +13,7 @@
         "oilrefinery": 30,
         "packager": 10,
         "quantumencoder": 0.1,
+        "resourcesink": 30,
         "smeltermk1": 4
     },
     "items": {

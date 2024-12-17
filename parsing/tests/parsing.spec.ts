@@ -64,6 +64,14 @@ describe('common', () => {
             expect(results.recipes.length).toBe(291);
         })
 
+        test('buildings test', () => {
+            //arrange
+
+            //act
+
+            //assert
+            expect(Object.keys(results.buildings).length).toBe(13);
+        })
 
         test('buildings should generate correct data', () => {
             expect(Object.keys(results.buildings).length).toBe(14);
@@ -83,6 +91,7 @@ describe('common', () => {
                 packager: 10,
                 quantumencoder: 0.1,  // This has variable power consumption and is calculated in the recipe
                 smeltermk1: 4,
+                resourcesink: 30,
             })
         })
 
